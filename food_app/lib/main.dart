@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/src/core/routes/app_router.dart';
+import 'package:food_app/src/core/theme/theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +12,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      theme: AppTheme.theme,
+      initialRoute: '/',
+      onGenerateRoute: (settings) => AppRouter.route(settings),
+    );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/src/features/splash/splash_page.dart';
+import 'package:food_app/src/features/splash/presentation/splash_page.dart';
 
 class AppRouter {
   //This method is like a navigation guide that tells the app
