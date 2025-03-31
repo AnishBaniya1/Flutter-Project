@@ -1,6 +1,8 @@
 class AppImage {
   static const String _path = 'assets/images';
   static const screen1 = '$_path/screen1.png';
+  static const screen2 = '$_path/screen2.png';
+  static const screen3 = '$_path/screen3.png';
 }
 
 class AppFont {

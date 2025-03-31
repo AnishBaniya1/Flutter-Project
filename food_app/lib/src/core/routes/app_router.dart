@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/src/features/login/presentation/login_page.dart';
 import 'package:food_app/src/features/splash/presentation/splash_page.dart';
 
 class AppRouter {
@@ -8,6 +9,8 @@ class AppRouter {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (context) => SplashPage());
+      case '/second':
+        return MaterialPageRoute(builder: (context) => LoginPage());
       default:
         return MaterialPageRoute(builder: (context) => InvalidRoute());
     }
