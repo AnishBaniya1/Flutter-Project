@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/src/features/login/presentation/login_page.dart';
+import 'package:food_app/src/features/auth/presentation/pages/login_page.dart';
+
 import 'package:food_app/src/features/splash/presentation/splash_page.dart';
 
 class AppRouter {

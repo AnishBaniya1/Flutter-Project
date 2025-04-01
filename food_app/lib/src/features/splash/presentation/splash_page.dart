@@ -72,7 +72,7 @@ class _SplashPageState extends State<SplashPage> {
             controller: _controller,
             count: SplashData.contents.length,
             effect: ExpandingDotsEffect(
-              activeDotColor: Colors.black38,
+              activeDotColor: Colors.red.shade400,
               dotColor: Colors.black12,
               dotHeight: 15,
               dotWidth: 20,
@@ -90,9 +90,12 @@ class _SplashPageState extends State<SplashPage> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.red.shade400,
                 foregroundColor: Colors.white,
                 fixedSize: Size(200, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
               child: Center(
                 child: Text(

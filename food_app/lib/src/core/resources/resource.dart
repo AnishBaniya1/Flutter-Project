@@ -3,6 +3,7 @@ class AppImage {
   static const screen1 = '$_path/screen1.png';
   static const screen2 = '$_path/screen2.png';
   static const screen3 = '$_path/screen3.png';
+  static const logo = '$_path/logo.png';
 }
 
 class AppFont {
