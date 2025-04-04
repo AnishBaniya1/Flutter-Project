@@ -8,6 +8,7 @@ class AppImage {
   static const pizza = '$_path/pizza.png';
   static const salad = '$_path/salad.png';
   static const burger = '$_path/burger.png';
+  static const salad2 = '$_path/salad2.png';
 }
 
 class AppFont {

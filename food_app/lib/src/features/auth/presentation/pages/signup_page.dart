@@ -4,7 +4,7 @@ import 'package:food_app/src/core/components/app_text_style.dart';
 import 'package:food_app/src/core/resources/resource.dart';
 import 'package:food_app/src/core/services/firebase_service.dart';
 import 'package:food_app/src/features/auth/presentation/pages/login_page.dart';
-import 'package:food_app/src/features/home/presentation/pages/home_page.dart';
+import 'package:food_app/src/features/common/widgets/bottom_navwrapper.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -150,7 +150,9 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         );
                         Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => HomePage()),
+                          MaterialPageRoute(
+                            builder: (context) => BottomNavwrapper(),
+                          ),
                         );
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(

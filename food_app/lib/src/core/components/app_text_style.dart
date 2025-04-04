@@ -24,4 +24,12 @@ class AppTextStyle {
       fontWeight: FontWeight.w500,
     );
   }
+
+  static TextStyle subheading2() {
+    return TextStyle(
+      color: Colors.black,
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+    );
+  }
 }
