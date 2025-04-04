@@ -11,6 +11,7 @@ class FirebaseService {
             email: emailAddress,
             password: password,
           );
+      return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -27,10 +28,13 @@ class FirebaseService {
     required String password,
   }) async {
     try {
+      print("Attempting to sign in: $emailAddress");
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
+      print("Login successful: ${credential.user?.email}");
+      return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');

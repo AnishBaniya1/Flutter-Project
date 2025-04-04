@@ -4,7 +4,7 @@ import 'package:food_app/src/core/components/app_text_style.dart';
 import 'package:food_app/src/core/resources/resource.dart';
 import 'package:food_app/src/core/services/firebase_service.dart';
 import 'package:food_app/src/features/auth/presentation/pages/signup_page.dart';
-import 'package:food_app/src/features/home/presentation/home_page.dart';
+import 'package:food_app/src/features/home/presentation/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -119,21 +119,23 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onPressed: () async {
-                    try {
-                      await _firebaseService.signInWithEmailAndPassword(
-                        emailAddress: _useremailController.text,
-                        password: _userpassController.text,
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Login Succesfully')),
-                      );
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                      );
-                    } catch (e) {
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(SnackBar(content: Text('Login failed')));
+                    if (_formkey.currentState!.validate()) {
+                      try {
+                        await _firebaseService.signInWithEmailAndPassword(
+                          emailAddress: _useremailController.text,
+                          password: _userpassController.text,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Login Succesfully')),
+                        );
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
+                      } catch (e) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text('Login failed')));
+                      }
                     }
                   },
                   child: const Text('LOGIN', style: TextStyle(fontSize: 18)),
