@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/src/core/components/app_text_style.dart';
 import 'package:food_app/src/core/resources/resource.dart';
+import 'package:food_app/src/features/details/presentation/detail_page.dart';
 import 'package:food_app/src/features/home/presentation/widgets/food_card_item.dart';
 import 'package:food_app/src/features/home/presentation/widgets/food_category_item.dart';
 
@@ -79,6 +80,12 @@ class _HomePageState extends State<HomePage> {
                       name: 'Veggie Taco Hash',
                       subtitle: 'Fresh and Healthy',
                       price: '50',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DetailPage()),
+                        );
+                      },
                     ),
                     SizedBox(width: 10),
                     FoodCardItem(
