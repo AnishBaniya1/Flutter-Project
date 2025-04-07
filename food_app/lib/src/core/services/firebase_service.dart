@@ -43,4 +43,15 @@ class FirebaseService {
       }
     }
   }
+
+  sendPasswordResetEmail({required String email}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      print("Sending Mail");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      }
+    }
+  }
 }

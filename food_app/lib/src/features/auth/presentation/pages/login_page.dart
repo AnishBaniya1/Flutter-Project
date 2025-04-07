@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/src/core/components/app_text_style.dart';
 import 'package:food_app/src/core/resources/resource.dart';
 import 'package:food_app/src/core/services/firebase_service.dart';
+import 'package:food_app/src/features/auth/presentation/pages/forgotpassword_page.dart';
 import 'package:food_app/src/features/auth/presentation/pages/signup_page.dart';
 import 'package:food_app/src/features/common/widgets/bottom_navwrapper.dart';
 
@@ -44,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 90),
+                const SizedBox(height: 70),
                 Image.asset(AppImage.logo),
                 SizedBox(height: 40),
                 const Text(
@@ -109,6 +110,29 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(right: 28),
+                  child: Container(
+                    alignment: Alignment.topRight,
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Forgot Password?",
+                        style: AppTextStyle.subheading2(),
+                        recognizer:
+                            TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ForgotpasswordPage(),
+                                  ),
+                                );
+                              },
+                      ),
+                    ),
+                  ),
+                ),
+
                 const SizedBox(height: 30),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -143,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: const Text('LOGIN', style: TextStyle(fontSize: 18)),
                 ),
 
-                const SizedBox(height: 110),
+                const SizedBox(height: 100),
 
                 RichText(
                   text: TextSpan(
