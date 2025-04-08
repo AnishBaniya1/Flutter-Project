@@ -60,8 +60,7 @@ class WalletPage extends StatelessWidget {
                     'Add Money',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16.0,
-                      fontFamily: 'Poppins',
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
