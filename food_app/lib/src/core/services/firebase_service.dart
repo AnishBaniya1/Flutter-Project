@@ -54,4 +54,12 @@ class FirebaseService {
       }
     }
   }
+
+  delete() async {
+    // await user?.delete();
+  }
+
+  signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
 }

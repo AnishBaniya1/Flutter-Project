@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.asset(
-                          AppImage.salad2,
+                          AppImage.salad4,
                           height: 120,
                           width: 120,
                           fit: BoxFit.cover,

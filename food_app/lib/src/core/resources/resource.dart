@@ -4,12 +4,14 @@ class AppImage {
   static const screen2 = '$_path/screen2.png';
   static const screen3 = '$_path/screen3.png';
   static const logo = '$_path/logo.png';
+  static const logo1 = '$_path/logo1.jpg';
   static const ice = '$_path/ice-cream.png';
   static const pizza = '$_path/pizza.png';
   static const salad = '$_path/salad.png';
   static const burger = '$_path/burger.png';
   static const salad2 = '$_path/salad2.png';
   static const wallet = '$_path/wallet.png';
+  static const salad4 = '$_path/salad4.png';
 }
 
 class AppFont {
