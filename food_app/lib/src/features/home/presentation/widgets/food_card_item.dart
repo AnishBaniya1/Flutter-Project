@@ -5,7 +5,7 @@ class FoodCardItem extends StatelessWidget {
   final String imagePath;
   final String name;
   final String subtitle;
-  final String price;
+  final int price;
   final VoidCallback? onTap;
 
   const FoodCardItem({

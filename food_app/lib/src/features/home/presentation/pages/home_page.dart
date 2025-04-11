@@ -79,11 +79,22 @@ class _HomePageState extends State<HomePage> {
                       imagePath: AppImage.salad2,
                       name: 'Veggie Taco Hash',
                       subtitle: 'Fresh and Healthy',
-                      price: '50',
+                      price: 50,
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => DetailPage()),
+                          MaterialPageRoute(
+                            builder:
+                                (context) => DetailPage(
+                                  name: 'Veggie Taco Hash',
+                                  description:
+                                      '''A salad is a dish made primarily from mixed vegetables, fruits, or both, often served cold. Common ingredients include lettuce, tomatoes, cucumbers, carrots, and dressings. 
+                        Salads can be light and refreshing or hearty with added proteins like chicken, beans, or cheese.''',
+                                  imagePath: AppImage.salad2,
+                                  deliveryTime: 30,
+                                  price: 50,
+                                ),
+                          ),
                         );
                       },
                     ),
@@ -92,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                       imagePath: AppImage.salad2,
                       name: 'Mix Veg Salad',
                       subtitle: 'Fresh and Healthy',
-                      price: '80',
+                      price: 80,
                     ),
                   ],
                 ),

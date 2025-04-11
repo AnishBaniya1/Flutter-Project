@@ -1,107 +1,163 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/src/core/components/app_text_style.dart';
-import 'package:food_app/src/core/resources/resource.dart';
+import 'package:food_app/src/features/details/presentation/blocs/detail_bloc.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+  final String name;
+  final String description;
+  final String imagePath;
+  final int deliveryTime;
+  final int price;
+  const DetailPage({
+    super.key,
+    required this.name,
+    required this.description,
+    required this.imagePath,
+    required this.deliveryTime,
+    required this.price,
+  });
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  int a = 1;
+  int quantity = 1;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Details')),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: Column(
-          children: [
-            Image.asset(
-              AppImage.salad2,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2.5,
-              fit: BoxFit.fill,
-            ),
-            SizedBox(height: 20),
-            Row(
+    return BlocProvider(
+      create: (context) => DetailBloc(),
+      child: BlocListener<DetailBloc, DetailState>(
+        listener: (context, state) {
+          if (quantity > 0) {
+            const snackbar = SnackBar(
+              content: Text('Item added to the cart!'),
+              backgroundColor: Colors.amber,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(title: Text('Details')),
+          body: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Column(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Image.asset(
+                  widget.imagePath,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 2.5,
+                  fit: BoxFit.fill,
+                ),
+                SizedBox(height: 20),
+                Row(
                   children: [
-                    Text('Veggie Taco Hash', style: AppTextStyle.name()),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [Text(widget.name, style: AppTextStyle.name())],
+                    ),
+                    Spacer(),
+                    InkWell(
+                      onTap: () {
+                        if (quantity > 1) {
+                          --quantity;
+                          setState(() {});
+                        }
+                      },
+                      child: Icon(Icons.remove_circle),
+                    ),
+                    SizedBox(width: 18),
+                    Text(quantity.toString(), style: AppTextStyle.name()),
+                    SizedBox(width: 18),
+                    InkWell(
+                      onTap: () {
+                        ++quantity;
+                        setState(() {});
+                      },
+                      child: Icon(Icons.add_circle),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 18),
+                Text(
+                  widget.description,
+                  maxLines: 3,
+                  style: AppTextStyle.subheading(),
+                ),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Text("Delivery Time", style: AppTextStyle.subheading2()),
+                    SizedBox(width: 25.0),
+                    Icon(Icons.alarm, color: Colors.black54),
+                    SizedBox(width: 5.0),
+                    Text(
+                      "${widget.deliveryTime}min",
+                      style: AppTextStyle.subheading2(),
+                    ),
                   ],
                 ),
                 Spacer(),
-                InkWell(
-                  onTap: () {
-                    if (a > 1) {
-                      --a;
-                      setState(() {});
-                    }
-                  },
-                  child: Icon(Icons.remove_circle),
-                ),
-                SizedBox(width: 18),
-                Text(a.toString(), style: AppTextStyle.name()),
-                SizedBox(width: 18),
-                InkWell(
-                  onTap: () {
-                    ++a;
-                    setState(() {});
-                  },
-                  child: Icon(Icons.add_circle),
-                ),
-              ],
-            ),
-            SizedBox(height: 18),
-            Text(
-              '''A salad is a dish made primarily from mixed vegetables, fruits, or both, often served cold. Common ingredients include lettuce, tomatoes, cucumbers, carrots, and dressings. 
-              Salads can be light and refreshing or hearty with added proteins like chicken, beans, or cheese.''',
-              maxLines: 3,
-              style: AppTextStyle.subheading(),
-            ),
-            SizedBox(height: 30),
-            Row(
-              children: [
-                Text("Delivery Time", style: AppTextStyle.subheading2()),
-                SizedBox(width: 25.0),
-                Icon(Icons.alarm, color: Colors.black54),
-                SizedBox(width: 5.0),
-                Text("30 min", style: AppTextStyle.subheading2()),
-              ],
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 30, right: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30, right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Total Price', style: AppTextStyle.subheading2()),
-                      Text('Rs.50', style: AppTextStyle.heading()),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Total Price',
+                            style: AppTextStyle.subheading2(),
+                          ),
+                          Text(
+                            'Rs.${quantity * widget.price}',
+                            style: AppTextStyle.heading(),
+                          ),
+                        ],
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Item added to the cart!',
+                              style: AppTextStyle.name(),
+                            ),
+                            backgroundColor: Colors.amber,
+                          );
+
+                          // Display the SnackBar using ScaffoldMessenger
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          context.read<DetailBloc>().add(
+                            AddToCartEvent(
+                              quantity: quantity,
+                              name: widget.name,
+                              price: quantity * widget.price,
+                              imagePath: widget.imagePath,
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red.shade400,
+                          foregroundColor: Colors.white,
+                          fixedSize: Size(150, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          'Add to Cart',
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ),
                     ],
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red.shade400,
-                      foregroundColor: Colors.white,
-                      fixedSize: Size(150, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text('Add to Cart', style: TextStyle(fontSize: 17)),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
