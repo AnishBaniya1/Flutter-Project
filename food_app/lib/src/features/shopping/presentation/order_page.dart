@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/src/core/components/app_text_style.dart';
-import 'package:food_app/src/core/resources/resource.dart';
 import 'package:food_app/src/features/details/presentation/blocs/detail_bloc.dart';
 
 class OrderPage extends StatelessWidget {
@@ -12,7 +11,7 @@ class OrderPage extends StatelessWidget {
     return Scaffold(
       body: BlocBuilder<DetailBloc, DetailState>(
         builder: (context, state) {
-          if (state.quantity == 0) {
+          if (state.cartItems.isEmpty) {
             return Center(child: Text('No items in cart.'));
           }
           return Column(
@@ -26,48 +25,69 @@ class OrderPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                child: Material(
-                  elevation: 5,
-                  borderRadius: BorderRadius.circular(10),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 10, top: 5, bottom: 5),
-                        height: 90,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(child: Text(state.quantity.toString())),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: state.cartItems.length,
+                  itemBuilder: (context, index) {
+                    final item = state.cartItems[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 20,
                       ),
-                      SizedBox(width: 30),
-                      ClipRRect(
+                      child: Material(
+                        elevation: 5,
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          state.imagePath,
-                          height: 50,
-                          width: 50,
-                          fit: BoxFit.cover,
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 10,
+                                top: 5,
+                                bottom: 5,
+                              ),
+                              height: 90,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Text(item.quantity.toString()),
+                              ),
+                            ),
+                            SizedBox(width: 30),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                item.imagePath,
+                                height: 50,
+                                width: 50,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Column(
+                              children: [
+                                Text(
+                                  item.name,
+                                  style: AppTextStyle.subheading2(),
+                                ),
+                                Text(
+                                  'Rs.${item.price}',
+                                  style: AppTextStyle.subheading2(),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(width: 20),
-                      Column(
-                        children: [
-                          Text(state.name, style: AppTextStyle.subheading2()),
-                          Text(
-                            'Rs.${state.price}',
-                            style: AppTextStyle.subheading2(),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
-              Spacer(),
+
               Divider(),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
@@ -75,7 +95,10 @@ class OrderPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Total Price', style: AppTextStyle.name()),
-                    Text('Rs.50', style: AppTextStyle.subheading2()),
+                    Text(
+                      'Rs.${state.cartItems.fold<int>(0, (sum, item) => sum + item.price)}',
+                      style: AppTextStyle.subheading2(),
+                    ),
                   ],
                 ),
               ),

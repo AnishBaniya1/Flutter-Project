@@ -104,6 +104,23 @@ class _HomePageState extends State<HomePage> {
                       name: 'Mix Veg Salad',
                       subtitle: 'Fresh and Healthy',
                       price: 80,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => DetailPage(
+                                  name: 'Mix Veg Salad',
+                                  description:
+                                      '''A salad is a dish made primarily from mixed vegetables, fruits, or both, often served cold. Common ingredients include lettuce, tomatoes, cucumbers, carrots, and dressings. 
+                        Salads can be light and refreshing or hearty with added proteins like chicken, beans, or cheese.''',
+                                  imagePath: AppImage.salad2,
+                                  deliveryTime: 35,
+                                  price: 80,
+                                ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
