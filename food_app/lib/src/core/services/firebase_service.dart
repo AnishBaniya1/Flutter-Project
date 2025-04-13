@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseService {
-  createUserWithEmailAndPassword({
-    required String emailAddress,
-    required String password,
-  }) async {
+  register({required String emailAddress, required String password}) async {
     try {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -23,10 +20,7 @@ class FirebaseService {
     }
   }
 
-  signInWithEmailAndPassword({
-    required String emailAddress,
-    required String password,
-  }) async {
+  login({required String emailAddress, required String password}) async {
     try {
       print("Attempting to sign in: $emailAddress");
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(

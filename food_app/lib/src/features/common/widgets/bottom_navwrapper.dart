@@ -5,43 +5,28 @@ import 'package:food_app/src/features/profile/presentation/pages/profile_page.da
 import 'package:food_app/src/features/shopping/presentation/order_page.dart';
 import 'package:food_app/src/features/wallet/presentation/wallet_page.dart';
 
-class BottomNavwrapper extends StatefulWidget {
-  const BottomNavwrapper({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<BottomNavwrapper> createState() => _BottomNavwrapperState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _BottomNavwrapperState extends State<BottomNavwrapper> {
-  int currentIndex = 0;
-
-  late List<Widget> pages;
-  late Widget currentPage;
-  late HomePage homepage;
-  late OrderPage order;
-  late WalletPage wallet;
-  late ProfilePage profile;
-  @override
-  void initState() {
-    homepage = HomePage();
-    order = OrderPage();
-    wallet = WalletPage();
-    profile = ProfilePage();
-    pages = [homepage, order, wallet, profile];
-    super.initState();
-  }
+class _MainPageState extends State<MainPage> {
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         height: 65,
+        index: _currentIndex,
         backgroundColor: Colors.white,
         color: Colors.black,
         animationDuration: Duration(milliseconds: 500),
         onTap: (int index) {
           setState(() {
-            currentIndex = index;
+            _currentIndex = index;
           });
         },
         items: [
@@ -51,7 +36,31 @@ class _BottomNavwrapperState extends State<BottomNavwrapper> {
           Icon(Icons.person_outline, color: Colors.white),
         ],
       ),
-      body: pages[currentIndex],
+      body: _body(),
     );
+  }
+
+  Widget _body() {
+    switch (_currentIndex) {
+      case 0:
+        return HomePage();
+      case 1:
+        return OrderPage();
+      case 2:
+        return WalletPage();
+      case 3:
+        return ProfilePage();
+      default:
+        return InvalidPage();
+    }
+  }
+}
+
+class InvalidPage extends StatelessWidget {
+  const InvalidPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text('Invalid Page'));
   }
 }

@@ -140,7 +140,7 @@ class _SignupPageState extends State<SignupPage> {
                   onPressed: () async {
                     if (_formkey.currentState!.validate()) {
                       try {
-                        await _firebaseService.createUserWithEmailAndPassword(
+                        await _firebaseService.register(
                           emailAddress: _useremailController.text,
                           password: _userpassController.text,
                         );
@@ -150,9 +150,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         );
                         Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => BottomNavwrapper(),
-                          ),
+                          MaterialPageRoute(builder: (context) => MainPage()),
                         );
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(

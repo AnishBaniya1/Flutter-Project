@@ -145,18 +145,18 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () async {
                     if (_formkey.currentState!.validate()) {
                       try {
-                        await _firebaseService.signInWithEmailAndPassword(
+                        final response = await _firebaseService.login(
                           emailAddress: _useremailController.text,
                           password: _userpassController.text,
                         );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Login Succesfully')),
-                        );
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => BottomNavwrapper(),
-                          ),
-                        );
+                        if (response != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Login Succesfully')),
+                          );
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => MainPage()),
+                          );
+                        }
                       } catch (e) {
                         ScaffoldMessenger.of(
                           context,
