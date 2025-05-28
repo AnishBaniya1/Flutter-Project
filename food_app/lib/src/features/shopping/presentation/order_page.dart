@@ -3,10 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/src/core/components/app_text_style.dart';
 import 'package:food_app/src/core/resources/resource.dart';
 import 'package:food_app/src/features/details/presentation/blocs/detail_bloc.dart';
+import 'package:food_app/src/features/wallet/presentation/wallet_page.dart';
+import 'package:food_app/src/features/wallet/wallet_model.dart';
 
-class OrderPage extends StatelessWidget {
+class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
 
+  @override
+  State<OrderPage> createState() => _OrderPageState();
+}
+
+class _OrderPageState extends State<OrderPage> {
+  final KhaltiService _khaltiService = KhaltiService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +126,27 @@ class OrderPage extends StatelessWidget {
 
                 child: InkWell(
                   borderRadius: BorderRadius.circular(8),
-                  onTap: () {},
+                  onTap: () {
+                    final totalPrice = state.cartItems.fold<int>(
+                      0,
+                      (sum, item) => sum + item.price,
+                    );
+                    final productNames = state.cartItems
+                        .map((item) => item.name)
+                        .join(', ');
+                    final productIds = state.cartItems
+                        .map((item) => item.name.hashCode.toString())
+                        .join('-');
+
+                    _khaltiService.makePayment(
+                      context,
+                      walletModel: WalletModel(
+                        amount: totalPrice * 100,
+                        productId: productIds,
+                        productName: productNames,
+                      ),
+                    );
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: Container(

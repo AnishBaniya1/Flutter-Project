@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                     imagePath: AppImage.salad2,
                     name: 'Veggie Taco Hash',
                     subtitle: 'Fresh and Healthy',
-                    price: 50,
+                    price: 1,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                         Salads can be light and refreshing or hearty with added proteins like chicken, beans, or cheese.''',
                                 imagePath: AppImage.salad2,
                                 deliveryTime: 30,
-                                price: 50,
+                                price: 1,
                               ),
                         ),
                       );
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                     imagePath: AppImage.salad2,
                     name: 'Mix Veg Salad',
                     subtitle: 'Fresh and Healthy',
-                    price: 80,
+                    price: 2,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                         Salads can be light and refreshing or hearty with added proteins like chicken, beans, or cheese.''',
                                 imagePath: AppImage.salad2,
                                 deliveryTime: 35,
-                                price: 80,
+                                price: 2,
                               ),
                         ),
                       );
@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 2,
                             child: Text(
-                              'Rs.70',
+                              'Rs.2',
                               style: AppTextStyle.subheading2(),
                             ),
                           ),

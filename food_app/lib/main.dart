@@ -6,6 +6,7 @@ import 'package:food_app/firebase_options.dart';
 import 'package:food_app/src/core/routes/app_router.dart';
 import 'package:food_app/src/core/theme/theme.dart';
 import 'package:food_app/src/features/details/presentation/blocs/detail_bloc.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,13 +20,21 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DetailBloc(),
-      child: MaterialApp(
-        theme: AppTheme.theme,
-        initialRoute: '/',
-        onGenerateRoute: (settings) => AppRouter.route(settings),
-      ),
+    return KhaltiScope(
+      publicKey: 'test_public_key_d5d9f63743584dc38753056b0cc737d5',
+      builder: (context, navigatorkey) {
+        return BlocProvider(
+          create: (context) => DetailBloc(),
+          child: MaterialApp(
+            navigatorKey: navigatorkey,
+            supportedLocales: const [Locale('en', 'US')],
+            localizationsDelegates: const [KhaltiLocalizations.delegate],
+            theme: AppTheme.theme,
+            initialRoute: '/',
+            onGenerateRoute: (settings) => AppRouter.route(settings),
+          ),
+        );
+      },
     );
   }
 }

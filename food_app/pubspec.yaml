@@ -41,6 +41,7 @@ dependencies:
   curved_navigation_bar: ^1.0.6
   flutter_bloc: ^9.1.1
   flutter_secure_storage: ^9.2.4
+  khalti_flutter: ^3.0.0
 
 dev_dependencies:
   flutter_test:
