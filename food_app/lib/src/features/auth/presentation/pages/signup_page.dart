@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/src/core/components/app_text_style.dart';
+import 'package:food_app/src/core/model/usermodel.dart';
 import 'package:food_app/src/core/resources/resource.dart';
 import 'package:food_app/src/core/services/firebase_service.dart';
+import 'package:food_app/src/core/services/session_controller.dart';
 import 'package:food_app/src/features/auth/presentation/pages/login_page.dart';
-import 'package:food_app/src/features/common/widgets/bottom_navwrapper.dart';
+import 'package:food_app/src/features/common/widgets/main_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -22,6 +25,7 @@ class _SignupPageState extends State<SignupPage> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _isPassHidden = true;
   final FirebaseService _firebaseService = FirebaseService();
+  final SessionController _sessionController = SessionController();
 
   @override
   void initState() {
@@ -140,10 +144,20 @@ class _SignupPageState extends State<SignupPage> {
                   onPressed: () async {
                     if (_formkey.currentState!.validate()) {
                       try {
-                        await _firebaseService.register(
+                        final credential = await _firebaseService.register(
                           emailAddress: _useremailController.text,
                           password: _userpassController.text,
                         );
+                        //to save the user information
+                        if (credential?.user != null) {
+                          final userModel = UserModel(
+                            id: credential?.user!.uid,
+                            name: _usernameController.text.trim(),
+                            email: _useremailController.text.trim(),
+                          );
+                          await _sessionController.saveUser(userModel);
+                        }
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('User registered Succesfully'),

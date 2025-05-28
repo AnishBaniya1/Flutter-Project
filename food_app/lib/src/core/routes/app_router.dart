@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/launcher_page.dart';
 import 'package:food_app/src/features/auth/presentation/pages/login_page.dart';
-
-import 'package:food_app/src/features/splash/presentation/splash_page.dart';
 
 class AppRouter {
   //This method is like a navigation guide that tells the app
@@ -9,7 +8,7 @@ class AppRouter {
   static Route<dynamic> route(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (context) => SplashPage());
+        return MaterialPageRoute(builder: (context) => LauncherPage());
       case '/second':
         return MaterialPageRoute(builder: (context) => LoginPage());
       default:

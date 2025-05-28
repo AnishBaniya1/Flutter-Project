@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/src/core/components/app_text_style.dart';
+import 'package:food_app/src/core/resources/resource.dart';
 import 'package:food_app/src/features/details/presentation/blocs/detail_bloc.dart';
 
 class OrderPage extends StatelessWidget {
@@ -12,7 +13,16 @@ class OrderPage extends StatelessWidget {
       body: BlocBuilder<DetailBloc, DetailState>(
         builder: (context, state) {
           if (state.cartItems.isEmpty) {
-            return Center(child: Text('No items in cart.'));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(AppImage.cart),
+                  SizedBox(height: 10),
+                  Text('No items in cart.', style: AppTextStyle.name()),
+                ],
+              ),
+            );
           }
           return Column(
             children: [

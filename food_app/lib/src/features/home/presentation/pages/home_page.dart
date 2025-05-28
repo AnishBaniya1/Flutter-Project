@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/src/core/components/app_text_style.dart';
 import 'package:food_app/src/core/resources/resource.dart';
+import 'package:food_app/src/core/services/session_controller.dart';
 import 'package:food_app/src/features/details/presentation/detail_page.dart';
 import 'package:food_app/src/features/home/presentation/widgets/food_card_item.dart';
 import 'package:food_app/src/features/home/presentation/widgets/food_category_item.dart';
@@ -20,6 +21,21 @@ class _HomePageState extends State<HomePage> {
     AppImage.salad,
     AppImage.burger,
   ];
+  String? userName = '';
+  final SessionController _sessionController = SessionController();
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    await _sessionController.getUser();
+    setState(() {
+      userName = SessionController.user?.name;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,7 +47,7 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Hello User,', style: AppTextStyle.name()),
+                Text('Hello $userName,', style: AppTextStyle.name()),
                 Container(
                   padding: EdgeInsets.all(3),
                   decoration: BoxDecoration(

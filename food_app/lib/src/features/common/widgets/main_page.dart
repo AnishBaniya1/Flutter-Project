@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:food_app/src/features/home/presentation/pages/home_page.dart';
 import 'package:food_app/src/features/profile/presentation/pages/profile_page.dart';
 import 'package:food_app/src/features/shopping/presentation/order_page.dart';
-import 'package:food_app/src/features/wallet/presentation/wallet_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -32,7 +31,6 @@ class _MainPageState extends State<MainPage> {
         items: [
           Icon(Icons.home_outlined, color: Colors.white),
           Icon(Icons.shopping_bag_outlined, color: Colors.white),
-          Icon(Icons.wallet_outlined, color: Colors.white),
           Icon(Icons.person_outline, color: Colors.white),
         ],
       ),
@@ -47,8 +45,6 @@ class _MainPageState extends State<MainPage> {
       case 1:
         return OrderPage();
       case 2:
-        return WalletPage();
-      case 3:
         return ProfilePage();
       default:
         return InvalidPage();

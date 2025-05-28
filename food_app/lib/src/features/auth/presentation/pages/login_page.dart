@@ -1,11 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/src/core/components/app_text_style.dart';
+import 'package:food_app/src/core/model/usermodel.dart';
 import 'package:food_app/src/core/resources/resource.dart';
 import 'package:food_app/src/core/services/firebase_service.dart';
+import 'package:food_app/src/core/services/session_controller.dart';
 import 'package:food_app/src/features/auth/presentation/pages/forgotpassword_page.dart';
 import 'package:food_app/src/features/auth/presentation/pages/signup_page.dart';
-import 'package:food_app/src/features/common/widgets/bottom_navwrapper.dart';
+import 'package:food_app/src/features/common/widgets/main_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _isPassHidden = true;
   final FirebaseService _firebaseService = FirebaseService();
+  final SessionController _sessionController = SessionController();
 
   @override
   void initState() {
@@ -149,7 +152,16 @@ class _LoginPageState extends State<LoginPage> {
                           emailAddress: _useremailController.text,
                           password: _userpassController.text,
                         );
-                        if (response != null) {
+                        if (response != null && response.user != null) {
+                          await _sessionController.getUser();
+                          final savedName = SessionController.user?.name;
+                          final userModel = UserModel(
+                            id: response.user?.uid,
+                            name: savedName,
+                            email: response.user?.email,
+                          );
+                          await _sessionController.saveUser(userModel);
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Login Succesfully')),
                           );

@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/src/core/components/app_text_style.dart';
 import 'package:food_app/src/core/resources/resource.dart';
-import 'package:food_app/src/core/services/firebase_service.dart';
+import 'package:food_app/src/core/services/session_controller.dart';
+import 'package:food_app/src/features/auth/presentation/pages/login_page.dart';
 import 'package:food_app/src/features/profile/presentation/widgets/custom_card.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -12,7 +14,22 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final FirebaseService _firebaseService = FirebaseService();
+  String name = '';
+  String email = '';
+  final SessionController _sessionController = SessionController();
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  Future<void> loadUser() async {
+    await _sessionController.getUser();
+    setState(() {
+      name = SessionController.user?.name ?? 'User';
+      email = SessionController.user?.email ?? 'Email';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Name', style: AppTextStyle.subheading()),
-                    Text('Anish Baniya', style: AppTextStyle.name()),
+                    Text(name, style: AppTextStyle.name()),
                   ],
                 ),
               ],
@@ -64,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Email', style: AppTextStyle.subheading()),
-                    Text('anishbaniya@gmail.com', style: AppTextStyle.name()),
+                    Text(email, style: AppTextStyle.subheading2()),
                   ],
                 ),
               ],
@@ -102,7 +119,24 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text('LogOut', style: AppTextStyle.name())],
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text: 'LogOut',
+                        style: AppTextStyle.name(),
+                        recognizer:
+                            TapGestureRecognizer()
+                              ..onTap = () async {
+                                await _sessionController.clearUser();
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPage(),
+                                  ),
+                                );
+                              },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

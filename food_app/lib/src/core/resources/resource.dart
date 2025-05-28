@@ -13,6 +13,7 @@ class AppImage {
   static const wallet = '$_path/wallet.png';
   static const salad4 = '$_path/salad4.png';
   static const food = '$_path/food.jpg';
+  static const cart = '$_path/empty_cart.png';
 }
 
 class AppFont {
